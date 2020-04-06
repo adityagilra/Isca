@@ -1,20 +1,39 @@
 echo loadmodules for Univ of Sheffield Iceberg cluster
 
-# this defaults to ia64, but we will use gfortran, not ifort
-export GFDL_MKMF_TEMPLATE=gfort
-
 # don't purge modules here
 # as anaconda module is loaded before running/compiling
 # and conda environment is set using `source activate isca_env`
-#module purge
+module purge
 # reloading conda here screws up earlier set conda environment
 #module load apps/python/anaconda3-2.5.0
 
+
+## this set of modules 
+## gives TYPE not defined error by fortran compiler,
+## we need later versions
 #module load compilers/intel/15.0.3
 #module load mpi/intel/openmpi/1.10.0
 #module load libs/netcdf/4.3.2
-#module load libs/pgi/netcdf/4.3.3.1
-module load libs/gcc/4.4.7/openmpi/1.10.1/netcdf-fortran/4.4.3
 
-export F90=mpifort
+# gfortran is required to use one of below modules,
+# so uncomment below if using one of these
+# this defaults to ia64, but we will use gfortran, not ifort
+export GFDL_MKMF_TEMPLATE=gfort
+
+## this module does not have nc-config or nf-config
+#module load libs/pgi/netcdf/4.3.3.1
+
+## common compiler for above modules
+#export F90=mpif90
+
+## this module does not have nc-config, but has nf-config,
+## so before compiling, do these steps in the terminal,
+## first `mkdir ~/bin` if it doesn't exist already
+## then `export PATH=$PATH:~/bin/`
+## then soft link ~/bin/nc-config to nf-config in the module as below:
+## `ln -s /usr/local/packages6/libs/gcc/4.4.7/openmpi/1.10.1/netcdf-fortran/4.4.3/bin/nf-config ~/bin/nc-config`
+module load libs/gcc/4.4.7/openmpi/1.10.1/netcdf-fortran/4.4.3
+## special compiler for this module
+export F90=h5pfc
+
 export CC=mpicc
