@@ -1,0 +1,12 @@
+echo loadmodules for Univ of Sheffield Bessemer cluster
+
+module purge
+
+# gfortran is required to use below modules
+# this defaults to ia64, but we will use gfortran, not ifort
+export GFDL_MKMF_TEMPLATE=gfort
+
+module load netCDF-Fortran/4.4.5-gompi-2019a
+
+export F90=mpif90
+export CC=mpicc

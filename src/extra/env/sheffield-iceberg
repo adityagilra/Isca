@@ -1,3 +1,5 @@
+echo Iceberg is decommisioned. Could not compile with any of the options tried below.
+echo Use sheffield-bessemer instead!
 echo loadmodules for Univ of Sheffield Iceberg cluster
 
 # don't purge modules here
